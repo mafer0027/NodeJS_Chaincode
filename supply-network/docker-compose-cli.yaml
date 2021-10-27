@@ -7,11 +7,18 @@ version: '2'
 
 volumes:
   orderer.example.com:
-  peer0.org1.example.com:
-  peer0.org2.example.com:
+  peer0.lender.example.com:
+  peer0.borrower.example.com:
+  peer0.broker.example.com:
+  peer0.investor.example.com:
+
+  caLender:
+  caBorrower:
+  caBroker:
+  caInvestor:
 
 networks:
-  byfn:
+  network:
 
 services:
 
@@ -21,23 +28,40 @@ services:
       service: orderer.example.com
     container_name: orderer.example.com
     networks:
-      - byfn
+      - network
 
-  peer0.org1.example.com:
-    container_name: peer0.org1.example.com
+  peer0.lender.example.com:
+    container_name: peer0.lender.example.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.org1.example.com
+      service: peer0.lender.example.com
     networks:
-      - byfn
+      - network
 
-  peer0.org2.example.com:
-    container_name: peer0.org2.example.com
-    extends:
-      file:  base/docker-compose-base.yaml
-      service: peer0.org2.example.com
-    networks:
-      - byfn
+    peer0.borrower.example.com:
+      container_name: peer0.borrower.example.com
+      extends:
+        file:  base/docker-compose-base.yaml
+        service: peer0.borrower.example.com
+      networks:
+        - network
+
+  peer0.broker.example.com:
+      container_name: peer0.broker.example.com
+      extends:
+        file:  base/docker-compose-base.yaml
+        service: peer0.broker.example.com
+      networks:
+        - network
+
+  peer0.investor.example.com:
+      container_name: peer0.investor.example.com
+      extends:
+        file:  base/docker-compose-base.yaml
+        service: peer0.investor.example.com
+      networks:
+        - network
+
 
 
   cli:
@@ -68,7 +92,13 @@ services:
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - orderer.example.com
-      - peer0.org1.example.com
-      - peer0.org2.example.com
+      - peer0.lender.example.com:
+      - peer0.borrower.example.com:
+      - peer0.broker.example.com:
+      - peer0.investor.example.com:
+      - caLender:
+      - caBorrower:
+      - caBroker:
+      - caInvestor:
     networks:
-      - byfn
+      - network

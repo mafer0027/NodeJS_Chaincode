@@ -7,28 +7,28 @@ OrdererOrgs:
 
 PeerOrgs:
   - Name: Lender
-    Domain: org1.example.com
+    Domain: lender.example.com
     EnableNodeOUs: true
     Template:
       Count: 1
     Users:
       Count: 1
   - Name: Borrower
-    Domain: org2.example.com
+    Domain: borrower.example.com
     EnableNodeOUs: true
     Template:
       Count: 1
     Users:
       Count: 1
   - Name: Broker
-    Domain: org2.example.com
+    Domain: broker.example.com
     EnableNodeOUs: true
     Template:
       Count: 1
     Users:
       Count: 1
   - Name: Investor
-    Domain: org2.example.com
+    Domain: investor.example.com
     EnableNodeOUs: true
     Template:
       Count: 1
